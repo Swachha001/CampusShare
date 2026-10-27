@@ -1,0 +1,54 @@
+@startuml use_case
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor Student
+actor Administrator
+
+rectangle "CampusShare System" {
+  usecase "Register" as UC1
+  usecase "Log In" as UC2
+  usecase "Browse Items" as UC3
+  usecase "Search and Filter Items" as UC4
+  usecase "View Item Details" as UC5
+  usecase "Add Item Listing" as UC6
+  usecase "Edit or Remove Own Listing" as UC7
+  usecase "Submit Borrow Request" as UC8
+  usecase "Cancel Own Request" as UC9
+  usecase "Approve or Reject Request" as UC10
+  usecase "Confirm Item Returned" as UC11
+  usecase "View Borrowing Activity" as UC12
+  usecase "Submit Review" as UC13
+  usecase "Report Item" as UC14
+  usecase "Manage Users" as UC15
+  usecase "Manage Item Categories" as UC16
+  usecase "Review Reported Items" as UC17
+}
+
+Student --> UC1
+Student --> UC2
+Student --> UC3
+Student --> UC4
+Student --> UC6
+Student --> UC7
+Student --> UC8
+Student --> UC9
+Student --> UC10
+Student --> UC11
+Student --> UC12
+Student --> UC13
+Student --> UC14
+
+Administrator --> UC2
+Administrator --> UC15
+Administrator --> UC16
+Administrator --> UC17
+
+UC3 ..> UC5 : <<extend>>
+UC4 ..> UC3 : <<extend>>
+UC8 ..> UC5 : <<include>>
+UC6 ..> UC2 : <<include>>
+UC8 ..> UC2 : <<include>>
+UC14 ..> UC5 : <<include>>
+@enduml

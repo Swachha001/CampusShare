@@ -1,0 +1,43 @@
+@startuml activity
+skinparam shadowing false
+title Borrowing Process
+
+|Borrower (Student)|
+start
+:Browse or search items;
+:View item details;
+if (Item status is AVAILABLE?) then (no)
+  :Choose another item;
+  stop
+else (yes)
+endif
+:Submit BorrowRequest;
+
+|System|
+:Save BorrowRequest\nstatus = PENDING;
+
+|Owner (Student)|
+:Review BorrowRequest;
+if (Approve request?) then (yes)
+  |System|
+  :Set BorrowRequest status = APPROVED;
+  :Create BorrowTransaction\nstatus = ACTIVE;
+  :Set Item status = BORROWED;
+  |Borrower (Student)|
+  :Collect item and use it\nuntil due date;
+  |Owner (Student)|
+  :Confirm item returned;
+  |System|
+  :Set BorrowTransaction status = RETURNED;
+  :Set Item status = AVAILABLE;
+  |Borrower (Student)|
+  :Optionally submit Review;
+  stop
+else (no)
+  |System|
+  :Set BorrowRequest status = REJECTED;
+  |Borrower (Student)|
+  :View rejection status;
+  stop
+endif
+@enduml
